@@ -483,11 +483,7 @@ namespace ui {
         }
 
         applyBlendFunc();
-        if (getGLProgramState()) {
-            _scale9Image->setGLProgramState(getGLProgramState());
-        } else {
-            this->setState(_brightState);
-        }
+        this->setState(_brightState);
         if(this->_isPatch9)
         {
             size.width = size.width - 2;
@@ -608,7 +604,11 @@ namespace ui {
             break;
         }
         
-        setGLProgramState(glState);
+        if (nullptr != _scale9Image)
+        {
+            _scale9Image->setGLProgramState(glState);
+        }
+
         _brightState = state;
     }
 
@@ -977,20 +977,6 @@ namespace ui {
 
         for(auto child : _children){
             child->updateDisplayedOpacity(255);
-        }
-    }
-    
-    void Scale9Sprite::setGLProgram(GLProgram *glprogram) {
-        Node::setGLProgram(glprogram);
-        if (_scale9Image) {
-            _scale9Image->setGLProgram(glprogram);
-        }
-    }
-    
-    void Scale9Sprite::setGLProgramState(GLProgramState *glProgramState) {
-        Node::setGLProgramState(glProgramState);
-        if (_scale9Image) {
-            _scale9Image->setGLProgramState(glProgramState);
         }
     }
 
