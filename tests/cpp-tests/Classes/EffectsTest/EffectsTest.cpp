@@ -232,7 +232,7 @@ cocos2d::ActionInterval* FadeOutDownTilesDemo::createEffect(float t)
 
 FadeOutDownTilesDemo::FadeOutDownTilesDemo()
 {
-    _title = "Waves3D";
+    _title = "FadeOutDownTiles";
     _subtitle = "";
 }
 
@@ -375,7 +375,7 @@ bool EffectBaseTest::init()
 void EffectBaseTest::checkAnim(float dt)
 {
     if ( _gridNodeTarget->getNumberOfRunningActions() == 0 && _gridNodeTarget->getGrid() != nullptr)
-        _gridNodeTarget->setGrid(nullptr);;
+        _gridNodeTarget->setGrid(nullptr);
 }
 
 EffectBaseTest::~EffectBaseTest(void)

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014 Chukong Technologies Inc.
+ * Copyright (c) 2014-2017 Chukong Technologies Inc.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -75,7 +75,7 @@ cc._imgLoader = {
         });
     }
 };
-cc.loader.register(["png", "jpg", "bmp","jpeg","gif"], cc._imgLoader);
+cc.loader.register(["png", "jpg", "bmp","jpeg","gif", "webp"], cc._imgLoader);
 
 cc._plistLoader = {
     load : function(realUrl, url, res, cb){

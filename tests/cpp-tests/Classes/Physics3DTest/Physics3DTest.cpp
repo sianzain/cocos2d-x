@@ -1,6 +1,6 @@
 /****************************************************************************
  Copyright (c) 2012 cocos2d-x.org
- Copyright (c) 2015 Chukong Technologies Inc.
+ Copyright (c) 2015-2017 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -111,7 +111,7 @@ bool Physics3DTestDemo::init()
         
         TTFConfig ttfConfig("fonts/arial.ttf", 10);
         auto label = Label::createWithTTF(ttfConfig,"DebugDraw OFF");
-        auto menuItem = MenuItemLabel::create(label, [=](Ref *ref){
+        auto menuItem = MenuItemLabel::create(label, [=](Ref* /*ref*/){
             if (getPhysics3DWorld()->isDebugDrawEnabled()){
                 getPhysics3DWorld()->setDebugDrawEnable(false);
                 label->setString("DebugDraw OFF");
@@ -137,6 +137,7 @@ bool Physics3DTestDemo::init()
 void Physics3DTestDemo::onTouchesBegan(const std::vector<Touch*>& touches, cocos2d::Event  *event)
 {
     _needShootBox = true;
+    event->stopPropagation();
 }
 
 void Physics3DTestDemo::onTouchesMoved(const std::vector<Touch*>& touches, cocos2d::Event  *event)
@@ -154,6 +155,7 @@ void Physics3DTestDemo::onTouchesMoved(const std::vector<Touch*>& touches, cocos
         {
             _needShootBox = false;
         }
+        event->stopPropagation();
     }
 }
 
@@ -169,6 +171,7 @@ void Physics3DTestDemo::onTouchesEnded(const std::vector<Touch*>& touches, cocos
         farP = _camera->unproject(farP);
         Vec3 dir(farP - nearP);
         shootBox(_camera->getPosition3D() + dir * 10.0f);
+        event->stopPropagation();
     }
 }
 
@@ -179,7 +182,7 @@ Physics3DTestDemo::Physics3DTestDemo( void )
 
 }
 
-void Physics3DTestDemo::update( float delta )
+void Physics3DTestDemo::update( float /*delta*/ )
 {
     
 }
@@ -530,6 +533,7 @@ void Physics3DConstraintDemo::onTouchesBegan(const std::vector<cocos2d::Touch*>&
             _constraint = Physics3DPointToPointConstraint::create(static_cast<Physics3DRigidBody*>(result.hitObj), position);
             physicsScene->getPhysics3DWorld()->addPhysics3DConstraint(_constraint, true);
             _pickingDistance = (result.hitPosition - nearP).length();
+            event->stopPropagation();
             return;
         }
     }
@@ -551,6 +555,7 @@ void Physics3DConstraintDemo::onTouchesMoved(const std::vector<cocos2d::Touch*>&
         _camera->unproject(size, &farP, &farP);
         auto dir = (farP - nearP).getNormalized();
         p2pConstraint->setPivotPointInB(nearP + dir * _pickingDistance);
+        event->stopPropagation();
         return;
     }
     Physics3DTestDemo::onTouchesMoved(touches, event);
@@ -561,6 +566,7 @@ void Physics3DConstraintDemo::onTouchesEnded(const std::vector<cocos2d::Touch*>&
     {
         physicsScene->getPhysics3DWorld()->removePhysics3DConstraint(_constraint);
         _constraint = nullptr;
+        event->stopPropagation();
         return;
     }
     Physics3DTestDemo::onTouchesEnded(touches, event);
